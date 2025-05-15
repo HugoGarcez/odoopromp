@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="mail_notification_layout_with_responsible_signature_and_peppol"
+                  name="Mail: mail notification layout with responsible signature (user_id of the record) and Peppol advertisement"
+                  inherit_id="mail.mail_notification_layout_with_responsible_signature"
+                  primary="True">
+            <xpath expr="//t[hasclass('o_signature')]" position="after">
+                <div id="peppol_advertisement" t-if="peppol_info" style="font-size: 13px;">
+                    <t t-if="peppol_info['is_peppol_sent']">
+                        <i class="text-muted" style="min-width: 590px;">
+                            This invoice has also been <b style="color: $o-enterprise-action-color">sent via Peppol</b>.
+                        </i>
+                    </t>
+                    <t t-if="not peppol_info['is_peppol_sent'] and not peppol_info['partner_on_peppol']">
+                        <i class="text-muted" style="min-width: 590px;">
+                            <t t-out="company.name"/> uses <a target="_blank" href="https://www.odoo.com/app/invoicing?utm_source=db&amp;utm_medium=email&amp;utm_campaign=einvoicing" style="color: $o-enterprise-color;">Odoo</a> to send invoices, but this one <b style="color: $o-enterprise-action-color;">could not be sent via Peppol</b>.
+                            <t t-if="peppol_info['peppol_country'] == 'BE'">
+                                <br/>
+                                In Belgium, electronic invoicing will be <u>mandatory as of January 2026</u> - don't wait to register.
+                            </t>
+                        </i>
+                    </t>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>
